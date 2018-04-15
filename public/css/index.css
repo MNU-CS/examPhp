@@ -1,0 +1,118 @@
+html {
+    background-image: url("../image/bg.jpg");
+    background-size: cover;
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+header,
+section,
+footer {
+    height: 33.3%;
+}
+
+section {
+    width: 33.3%;
+    margin: 0 auto;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.icon {
+    width: 40%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 5px 0 0 5px;
+}
+
+
+.form,
+.form form,
+.form form ul {
+    height: 100%;
+}
+
+.form {
+    border-radius: 0 5px 5px 0;
+}
+
+.form {
+    width: 60%;
+    background-color: rgba(255, 255, 255, .4);
+}
+
+.form ul {
+    display: -webkit-flex;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.form li {
+    flex: 1;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.form ul>li>h2 {
+    padding-top: 20px;
+}
+
+.form ul>li:nth-child(2) {
+    flex: 2;
+}
+
+.form input,
+.form button {
+    width: 100%;
+    height: 20%;
+    margin: 10px auto;
+    border-radius: 3px;
+    opacity: 0.4;
+    border: 0;
+}
+
+/*.form input:hover {*/
+    /*text-shadow: 0 0 5px rgba(0, 0, 0, .3);*/
+/*}*/
+
+.form input:focus {
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+/*.form button:hover {*/
+    /*background-color: rgba(0, 0, 0, .4);*/
+    /*cursor: pointer;*/
+/*}*/
+/*phone*/
+
+@media screen and (max-width: 600px) {
+    section {
+        width: 66.6%;
+        margin: 0 auto;
+    }
+    .icon {
+        display: none;
+    }
+    .form {
+        width: 100%;
+        background-color: rgba(255, 255, 255, .4);
+    }
+}
+/*pc*/
+
+@media screen and (min-width: 600px) and (max-width: 800px){
+    a {
+        font-size: 12px;
+    }
+}
