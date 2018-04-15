@@ -15,7 +15,7 @@
             <td>工号</td>
             <td>名称</td>
             <td>注册时间</td>
-            <td>是否有效</td>
+            <td></td>
         </tr>
         @foreach($res as $k => $value)
             <tr>
@@ -24,12 +24,8 @@
                 <td>{{$value->name}}</td>
                 <td>{{$value->register_time}}</td>
                 <td>
-                    <a href="{{url('update_flag?id=' . $value->id . '&flag=' . $value->flag)}}" >
-                        @if($value->flag == 1)
-                            <div style="color: green;">有效</div>
-                        @else
-                            <div style="color: red;">无效</div>
-                        @endif
+                    <a href="{{url('del_user?id=' . $value->id)}}" onclick="confirm('确定删除吗?')" >
+                        删除
                     </a>
                 </td>
 

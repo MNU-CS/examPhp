@@ -32,6 +32,8 @@
                         <input name="passwd" class="text" id="passwd" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
                     </div>
                     <div class="mb2"><a class="act-but submit" href="javascript:;" id="sub1" style="color: #FFFFFF">登录</a></div>
+
+                    {{--<div style="text-align: center"><a href="{{url('register')}}" style="color: white;">还没账号？注册一个吧</a></div>--}}
                 </form>
             </div>
         </div>

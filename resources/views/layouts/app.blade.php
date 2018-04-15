@@ -38,7 +38,7 @@
                     <dl class="layui-nav-child ">
                         <dd><a href="{{url('add_user')}}">添加用户</a></dd>
                         <dd><a href="{{url('add_batch')}}">批量添加</a></dd>
-                        <dd><a href="{{url('grant_power')}}">授予比赛权限</a></dd>
+                        {{--<dd><a href="{{url('grant_power')}}">授予比赛权限</a></dd>--}}
                         <dd><a href="{{url('teacher_list')}}">教师列表</a></dd>
                         <dd><a href="{{url('change_pwd')}}">更改密码</a></dd>
                     </dl>

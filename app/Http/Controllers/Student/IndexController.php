@@ -14,15 +14,31 @@ class IndexController extends Controller
      * @param Request $request 判断请求类型
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function register(Request $request)
-    {
-        if($request->isMethod('post')){
-            $input = Request::all();
-            var_dump($input);
-        }else{
-            return view('Student.register');
-        }
-    }
+//    public function register(Request $request)
+//    {
+//        if($request->isMethod('post')){
+//            $data = [
+//                'name'      => Input::get('name'),
+//                'passwd'    => Input::get('passwd'),
+//                'num'       => Input::get('num'),
+//                'class'     => Input::get('class'),
+//                'register_time' => date('Y-m-d H:i:s')
+//            ];
+//            $bool = DB::table('student')->where('num',$data['num'])->first();
+//            if ($bool != null){
+//                return '账号已存在';
+//            }else{
+//                $bool1 = DB::table('student')->insert($data);
+//                if ($bool1 !== false){
+//                    session(['student' => $data['num']]);
+//                    session(['name' => $data['name']]);
+//                    return 1;
+//                }
+//            }
+//        }else{
+//            return view('Student.register');
+//        }
+//    }
 
 
     /**
@@ -220,18 +236,19 @@ class IndexController extends Controller
                     return showMessage($base);
                 }
                 $data['passwd'] = substr_replace(md5($passwd),'a8c1m4',5,0);
-            }
-            $data['name'] = Input::get('name');
-            $data['class'] = Input::get('class');
-            $num = session('student');
-            $bool = DB::table('student')->where('num',$num)->update($data);
-            if ($bool !== false){
+                $num = session('student');
+                $bool = DB::table('student')->where('num',$num)->update($data);
+                if ($bool !== false){
+                    return redirect('content');
+                }else{
+                    $base['message'] = '更改失败，数据库挂了？';
+                    $base['url'] = 'login';
+                    return showMessage($base);
+                }
+            } else{
                 return redirect('content');
-            }else{
-                $base['message'] = '更改失败，数据库挂了？';
-                $base['url'] = 'login';
-                return showMessage($base);
             }
+
         }else{
             $id = session('student');
             $res = DB::table('student')->where('num',$id)->first();

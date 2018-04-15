@@ -18,7 +18,7 @@
                 <input type="text" name="num" required lay-verify="required" disabled
                        autocomplete="off" class="layui-input" value="{{$res->num}}">
             </div>
-            <div class="layui-form-mid layui-word-aux">更改不了学号哦</div>
+            <div class="layui-form-mid layui-word-aux"></div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">密码</label>
@@ -30,13 +30,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">姓名</label>
             <div class="layui-input-inline">
-                <input type="text" name="name" required lay-verify="required" value="{{$res->name}}" autocomplete="off" class="layui-input">
+                <input type="text" name="name" required disabled lay-verify="required" value="{{$res->name}}" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">班级</label>
             <div class="layui-input-inline">
-                <input type="text" name="class" required lay-verify="required"
+                <input type="text" name="class" disabled required lay-verify="required"
                        value="{{$res->class}}" autocomplete="off" class="layui-input">
             </div>
         </div>

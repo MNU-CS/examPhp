@@ -66,6 +66,22 @@
 	position: absolute;
 	margin: 10px 13px;
 }
+.u_name{
+	width: 25px;
+	height: 25px;
+	background-image: url(../img/login_ico.png);
+	background-position: -85px -34px;
+	position: absolute;
+	margin: 10px 13px;
+}
+.u_class{
+	width: 25px;
+	height: 25px;
+	background-image: url(../img/login_ico.png);
+	background-position: -85px -155px;
+	position: absolute;
+	margin: 10px 13px;
+}
 .l-login{
 	position: absolute;
 	z-index: 1;

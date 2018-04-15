@@ -49,8 +49,12 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">新闻</label>
-            <div class="layui-input-block">
-                <textarea name="news" id="" cols="100" rows="10"></textarea>
+            <div class="layui-input-inline">
+                <textarea name="news" id="" cols="40" rows="10"></textarea>
+            </div>
+            <label class="layui-form-label" style="margin-left: 5%">用户</label>
+            <div class="layui-input-inline">
+                <textarea name="users" id="" cols="40" rows="10"></textarea>
             </div>
         </div>
         <input type="hidden" name="update_at" value="{{session('teacher')}}">

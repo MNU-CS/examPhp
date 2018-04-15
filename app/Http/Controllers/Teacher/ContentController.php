@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\Rules\In;
 use ZipArchive;
 class ContentController extends Controller
 {
@@ -43,6 +44,7 @@ class ContentController extends Controller
         }
         if ($request->isMethod('post')){
             DB::transaction(function (){
+
                 $data = [
                     'title'        => Input::get('title'),
                     'start_time'   => Input::get('start_time'),
@@ -67,6 +69,15 @@ class ContentController extends Controller
                 foreach ($problem as $item) {
                     $res['problem_id'] = $item;
                     DB::table('online_problem')->insert($res);
+                }
+                $users = explode(PHP_EOL,Input::get('users'));
+                foreach ($users as $user) {
+                    $bool = DB::table('group')->where('num_id',trim($user))->where('content_id',$res['content_id'])->first();
+                    if ($bool == null){
+                        $group['num_id'] = trim($user);
+                        $group['content_id'] = $res['content_id'];
+                        DB::table('group')->insert($group);
+                    }
                 }
 
             },5);
@@ -127,6 +138,18 @@ class ContentController extends Controller
                     $res['content_id'] = $id;
                     DB::table('online_problem')->insert($res);
                 }
+                DB::table('group')
+                    ->where('content_id',$id)
+                    ->delete();
+                $users = explode(PHP_EOL,Input::get('users'));
+                foreach ($users as $user) {
+                    $bool = DB::table('group')->where('num_id',trim($user))->where('content_id',$id)->first();
+                    if ($bool == null){
+                        $group['num_id'] = trim($user);
+                        $group['content_id'] = $res['content_id'];
+                        DB::table('group')->insert($group);
+                    }
+                }
 
             },5);
             $base['message'] = '修改成功';
@@ -143,10 +166,16 @@ class ContentController extends Controller
                 $problem[] = $item;
             }
             $all_problem = implode(',',$problem);
-
+            $obj_users = DB::table('group')->where('content_id',$id)->pluck('num_id');
+            $users = array();
+            foreach ($obj_users as $obj_user) {
+                $users[] = $obj_user;
+            }
+            $user = implode(PHP_EOL,$users);
             return view('Teacher/update_content')
                 ->with('problem',$all_problem)
-                ->with('res',$res);
+                ->with('res',$res)
+                ->with('user',$user);
         }
     }
 

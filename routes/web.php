@@ -20,7 +20,7 @@ Route::get('/', function () {
 //老师登录
 Route::match(['post','get'],'admin','Teacher\AdminController@index');
 //学生注册
-Route::get('register','Student\IndexController@register');
+Route::match(['post','get'],'register','Student\IndexController@register');
 //学生登录
 Route::match(['post','get'],'login','Student\IndexController@login');
 //学生查看考试列表
@@ -50,7 +50,7 @@ Route::get('update_open','Teacher\ContentController@update_open');
 //管理员列表
 Route::get('teacher_list','Teacher\UserController@teacher_list');
 //更改老师状态（是否有效）
-Route::get('update_flag','Teacher\UserController@update_flag');
+Route::get('del_user','Teacher\UserController@del_user');
 //更改用户密码
 Route::match(['post','get'],'change_pwd','Teacher\UserController@change_pwd');
 //授予考试权限

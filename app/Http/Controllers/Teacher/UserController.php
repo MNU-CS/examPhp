@@ -88,11 +88,7 @@ class UserController extends Controller
     }
 
 
-    /**
-     * 更改管理员是否有效
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
-     */
-    public function update_flag()
+    public function del_user()
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
@@ -100,13 +96,12 @@ class UserController extends Controller
             return showMessage($base);
         }
         $id = Input::get('id');
-        $data['flag'] = Input::get('flag') == 1 ? 0 : 1;
         DB::table('teacher')
             ->where('id',$id)
-            ->update($data);
+            ->delete();
         return back();
-    }
 
+    }
 
     /**
      * 更改密码
@@ -165,83 +160,83 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function grant_power(Request $request)
-    {
-        if(session('teacher') == null){
-            $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
-            return showMessage($base);
-        }
-        if ($request->isMethod('post')){
-            $type = Input::get('type');
-            $num = Input::get('num');
-
-            $content_id = Input::get('content_id');
-            $content_group = DB::table('content')->where('id',$content_id)->first();
-            if ($content_group == null){
-                $base['message'] = '不存在的考试id';
-                $base['url'] = 'grant_power';
-                return showMessage($base);
-            }
-            if ($type == 1){
-                $file = $_FILES['file']['tmp_name'];
-                if ($file == null){
-                    $base['message'] = '请上传文件';
-                    $base['url'] = 'grant_power';
-                    return showMessage($base);
-                }
-                Excel::load($file, function($reader) {
-                    //$data = $reader->all();
-                    //获取excel的第几张表
-                    $reader = $reader->getSheet(0);
-                    $highestRow = $reader->getHighestRow(); // 取得总行数
-                    //获取表中的数据
-//                $data = $reader->toArray();
-                    $content_id = Input::get('content_id');
-                    for ($i = 2;$i <= $highestRow;$i ++){
-                        $data[$i]['num_id'] = $reader->getCell('A'.$i)->getValue();
-                        $data[$i]['content_id'] = $content_id;
-                        $bool = DB::table('group')->where('num_id',$data[$i]['num_id'])->where('content_id',$content_id)->first();
-                        if ($bool == null){
-                            try{
-                                DB::table('group')->where('num_id',$data[$i]['num_id'])->insert($data[$i]);
-                            }catch (Exception $e){
-                                print($e->getMessage());
-                                exit;
-                            }
-                        }
-                    }
-                });
-                $base['message'] = '添加成功';
-                $base['url'] = 'grant_power';
-                return showMessage($base);
-
-            }else {
-                if ($num == null){
-                    $base['message'] = '请输入学号';
-                    $base['url'] = 'grant_power';
-                    return showMessage($base);
-                }
-                $data['num_id'] = $num;
-                $data['content_id'] = $content_id;
-                $bool = DB::table('group')->where('num_id',$num)->where('content_id',$content_id)->first();
-
-                if ($bool == null){
-                    $bool1 = DB::table('group')->insert($data);
-                    if ($bool1 === false){
-                        $base['message'] = '数据库发生错误，请重试';
-                        $base['url'] = 'grant_power';
-                        return showMessage($base);
-                    }
-                }
-                $base['message'] = '添加成功';
-                $base['url'] = 'grant_power';
-                return showMessage($base);
-            }
-        }else{
-            return view('Teacher.grant_power');
-        }
-    }
+//    public function grant_power(Request $request)
+//    {
+//        if(session('teacher') == null){
+//            $base['message'] = '请重新登录';
+//            $base['url'] = 'admin';
+//            return showMessage($base);
+//        }
+//        if ($request->isMethod('post')){
+//            $type = Input::get('type');
+//            $num = Input::get('num');
+//
+//            $content_id = Input::get('content_id');
+//            $content_group = DB::table('content')->where('id',$content_id)->first();
+//            if ($content_group == null){
+//                $base['message'] = '不存在的考试id';
+//                $base['url'] = 'grant_power';
+//                return showMessage($base);
+//            }
+//            if ($type == 1){
+//                $file = $_FILES['file']['tmp_name'];
+//                if ($file == null){
+//                    $base['message'] = '请上传文件';
+//                    $base['url'] = 'grant_power';
+//                    return showMessage($base);
+//                }
+//                Excel::load($file, function($reader) {
+//                    //$data = $reader->all();
+//                    //获取excel的第几张表
+//                    $reader = $reader->getSheet(0);
+//                    $highestRow = $reader->getHighestRow(); // 取得总行数
+//                    //获取表中的数据
+////                $data = $reader->toArray();
+//                    $content_id = Input::get('content_id');
+//                    for ($i = 2;$i <= $highestRow;$i ++){
+//                        $data[$i]['num_id'] = $reader->getCell('A'.$i)->getValue();
+//                        $data[$i]['content_id'] = $content_id;
+//                        $bool = DB::table('group')->where('num_id',$data[$i]['num_id'])->where('content_id',$content_id)->first();
+//                        if ($bool == null){
+//                            try{
+//                                DB::table('group')->where('num_id',$data[$i]['num_id'])->insert($data[$i]);
+//                            }catch (Exception $e){
+//                                print($e->getMessage());
+//                                exit;
+//                            }
+//                        }
+//                    }
+//                });
+//                $base['message'] = '添加成功';
+//                $base['url'] = 'grant_power';
+//                return showMessage($base);
+//
+//            }else {
+//                if ($num == null){
+//                    $base['message'] = '请输入学号';
+//                    $base['url'] = 'grant_power';
+//                    return showMessage($base);
+//                }
+//                $data['num_id'] = $num;
+//                $data['content_id'] = $content_id;
+//                $bool = DB::table('group')->where('num_id',$num)->where('content_id',$content_id)->first();
+//
+//                if ($bool == null){
+//                    $bool1 = DB::table('group')->insert($data);
+//                    if ($bool1 === false){
+//                        $base['message'] = '数据库发生错误，请重试';
+//                        $base['url'] = 'grant_power';
+//                        return showMessage($base);
+//                    }
+//                }
+//                $base['message'] = '添加成功';
+//                $base['url'] = 'grant_power';
+//                return showMessage($base);
+//            }
+//        }else{
+//            return view('Teacher.grant_power');
+//        }
+//    }
 
 
     /**
