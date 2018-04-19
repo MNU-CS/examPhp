@@ -21,7 +21,14 @@
                 <button class="layui-btn" lay-submit lay-filter="formDemo" id="sub">立即提交</button>
             </div>
         </div>
-
+    <div>
+        <div>表格要求</div>
+        <div>第一行为班级、学号、姓名、密码</div>
+        <div>第二行开始,第一列为班级、第二列为学号、第三列为姓名、第四列为密码</div>
+        <div>如图：
+            <img src="{{asset('image/excel.jpg')}}" alt="excel">
+        </div>
+    </div>
 @endsection
 @section('bottom')
     <script>

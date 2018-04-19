@@ -14,8 +14,11 @@
             <div class="layui-input-inline">
                 <select name="type" lay-verify="required">
                     <option value=""></option>
-                    <option value="0">老师</option>
                     <option value="1">学生</option>
+                    <option value="2">老师</option>
+                    @if(session('del') == 1)
+                        <option value="3">管理员</option>
+                    @endif
                 </select>
             </div>
         </div>

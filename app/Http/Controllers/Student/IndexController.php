@@ -11,37 +11,6 @@ class IndexController extends Controller
 {
 
     /**
-     * @param Request $request 判断请求类型
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-//    public function register(Request $request)
-//    {
-//        if($request->isMethod('post')){
-//            $data = [
-//                'name'      => Input::get('name'),
-//                'passwd'    => Input::get('passwd'),
-//                'num'       => Input::get('num'),
-//                'class'     => Input::get('class'),
-//                'register_time' => date('Y-m-d H:i:s')
-//            ];
-//            $bool = DB::table('student')->where('num',$data['num'])->first();
-//            if ($bool != null){
-//                return '账号已存在';
-//            }else{
-//                $bool1 = DB::table('student')->insert($data);
-//                if ($bool1 !== false){
-//                    session(['student' => $data['num']]);
-//                    session(['name' => $data['name']]);
-//                    return 1;
-//                }
-//            }
-//        }else{
-//            return view('Student.register');
-//        }
-//    }
-
-
-    /**
      * 登录验证
      * @param Request $request
      * @return string
@@ -50,6 +19,9 @@ class IndexController extends Controller
     {
         if (session('student') != null){
             return redirect('content');
+        }
+        if (session('teacher') != null){
+            return redirect('manage');
         }
         if ($request->isMethod('post')){
             $username = Input::get('username');
@@ -64,9 +36,20 @@ class IndexController extends Controller
                 if ($res[0]->passwd != substr_replace(md5($passwd),'a8c1m4',5,0)){
                     return '密码错误';
                 }else {
-                    session(['student' => $username]);
-                    session(['name' => $res[0]->name]);
-                    return 1;
+                    if ($res[0]->role === 1) {
+                        session(['student' => $username]);
+                        session(['name' => $res[0]->name]);
+                        return 1;
+                    } elseif ($res[0]->role === 2){
+                        session(['teacher' => $username]);
+                        session(['name' => $res[0]->name]);
+                        return 2;
+                    } elseif ($res[0]->role === 3){
+                        session(['teacher' => $username]);
+                        session(['del' => 1]);
+                        session(['name' => $res[0]->name]);
+                        return 2;
+                    }
                 }
             }
         } else {
@@ -263,13 +246,7 @@ class IndexController extends Controller
      */
     public function logout(Request $request)
     {
-        if (session('teacher') != null) {
-            $request->session()->flush();
-            return redirect('admin');
-        }else {
             $request->session()->flush();
             return redirect('login');
-        }
-
     }
 }

@@ -17,6 +17,7 @@
             <td>是否公开</td>
             <td>状态</td>
             <td>编辑</td>
+            <td>删除</td>
             <td>操作人</td>
             <td>操作时间</td>
         </tr>
@@ -38,7 +39,6 @@
                         @endif
                     </a>
                 </td>
-
                 <td>
                     <a href="{{url('update_cstatus?id=' . $value->id . '&status=' . $value->status)}}" >
                         @if($value->status == 1)
@@ -50,7 +50,16 @@
                 </td>
                 <td><a href="{{url('update_content?id=' . $value->id)}}">
                         <img src="{{'image/edit.png'}}" alt="编辑" style="height: 15%">
-                    </a></td>
+                    </a>
+                </td>
+
+                <td>
+                    @if(session('del') === 1)
+                    <a href="{{url('delete_pc?id=' . $value->id . '&flag=2')}}" onclick="confirm('确定删除吗?')">
+                        <img src="{{asset('image/delete.png')}}" alt="删除" style="height: 75%">
+                    </a>
+                    @endif
+                </td>
                 <td>{{$value->update_at}}</td>
 
                 <td>{{$value->update_time}}</td>

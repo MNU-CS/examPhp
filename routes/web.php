@@ -14,14 +14,7 @@
 Route::get('/', function () {
     return redirect('login');
 });
-
-//学生登录
-//Route::match(['post','get'],'index','Student\IndexController@login');
-//老师登录
-Route::match(['post','get'],'admin','Teacher\AdminController@index');
-//学生注册
-Route::match(['post','get'],'register','Student\IndexController@register');
-//学生登录
+//登录
 Route::match(['post','get'],'login','Student\IndexController@login');
 //学生查看考试列表
 Route::get('content','Student\IndexController@content');
@@ -73,3 +66,5 @@ Route::match(['post','get'],'admin_information','Teacher\AdminController@admin_i
 Route::get('show_submit','Teacher\ContentController@show_submit');
 //查看代码
 Route::get('show_code','Teacher\ContentController@show_code');
+//删除题目或比赛
+Route::get('delete_pc','Teacher\ContentController@delete_pc');

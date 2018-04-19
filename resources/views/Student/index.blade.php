@@ -59,7 +59,9 @@
             success: function(msg){
                 if (msg == 1)
                     window.location.href = '/content';
-                else{
+                else if(msg == 2){
+                    window.location.href = '/manage';
+                }else {
                     $('#hint').html(msg);
                 }
             }

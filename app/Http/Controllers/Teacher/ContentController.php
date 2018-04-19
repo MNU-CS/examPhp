@@ -20,7 +20,7 @@ class ContentController extends Controller
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'login';
             return showMessage($base);
         }
         $res = DB::table('content')
@@ -39,7 +39,7 @@ class ContentController extends Controller
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'login';
             return showMessage($base);
         }
         if ($request->isMethod('post')){
@@ -101,7 +101,7 @@ class ContentController extends Controller
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'login';
             return showMessage($base);
         }
         if ($request->isMethod('post')){
@@ -143,11 +143,13 @@ class ContentController extends Controller
                     ->delete();
                 $users = explode(PHP_EOL,Input::get('users'));
                 foreach ($users as $user) {
-                    $bool = DB::table('group')->where('num_id',trim($user))->where('content_id',$id)->first();
-                    if ($bool == null){
-                        $group['num_id'] = trim($user);
-                        $group['content_id'] = $res['content_id'];
-                        DB::table('group')->insert($group);
+                    if ($user != '') {
+                        $bool = DB::table('group')->where('num_id', trim($user))->where('content_id', $id)->first();
+                        if ($bool == null) {
+                            $group['num_id'] = trim($user);
+                            $group['content_id'] = $res['content_id'];
+                            DB::table('group')->insert($group);
+                        }
                     }
                 }
 
@@ -188,7 +190,7 @@ class ContentController extends Controller
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'login';
             return showMessage($base);
         }
         $id = Input::get('id');
@@ -213,7 +215,7 @@ class ContentController extends Controller
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'login';
             return showMessage($base);
         }
         $id = Input::get('id');
@@ -240,7 +242,7 @@ class ContentController extends Controller
         //判断是否过期
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'login';
             return showMessage($base);
         }
         $id = Input::get('id');
@@ -347,7 +349,7 @@ class ContentController extends Controller
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'login';
             return showMessage($base);
         }
         $content_id = Input::get('content_id');
@@ -387,11 +389,39 @@ class ContentController extends Controller
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'login';
             return showMessage($base);
         }
         $id = Input::get('id');
         $res = DB::table('submit')->where('id',$id)->first();
         return view('Teacher.show_code')->with('res',$res);
+    }
+
+
+    /**
+     * 删除题目或考试
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function delete_pc()
+    {
+        if(session('teacher') == null){
+            $base['message'] = '请重新登录';
+            $base['url'] = 'login';
+            return showMessage($base);
+        }
+        $id = Input::get('id');
+        $flag = Input::get('flag');
+        if ($flag == 1){
+            $bool = DB::table('problem')
+                ->where('id',$id)
+                ->delete();
+        } else{
+            $bool = DB::table('content')
+                ->where('id',$id)
+                ->delete();
+        }
+        if($bool != false){
+            return back();
+        }
     }
 }

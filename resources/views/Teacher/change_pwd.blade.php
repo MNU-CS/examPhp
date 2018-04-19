@@ -10,16 +10,6 @@
     <form action="{{url('change_pwd')}}" method="post" class="layui-form">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="layui-form-item">
-            <label class="layui-form-label">用户类型</label>
-            <div class="layui-input-inline">
-                <select name="type" lay-verify="required">
-                    <option value=""></option>
-                    <option value="0" @if(session('type') === 0) selected @endif>老师</option>
-                    <option value="1" @if(session('type') === 1) selected @endif>学生</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label class="layui-form-label">学/工号</label>
             <div class="layui-input-inline">
                 <input type="text" name="num" required  lay-verify="required" placeholder="请输入学/工号"

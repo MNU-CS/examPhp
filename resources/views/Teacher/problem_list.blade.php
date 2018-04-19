@@ -17,7 +17,7 @@
         <td>编号</td>
         <td>题目名称</td>
         <td>更改时间</td>
-        <td>状态</td>
+        <td>删除</td>
         <td>编辑</td>
         <td>操作人</td>
     </tr>
@@ -27,13 +27,11 @@
             <td>{{$value->title}}</td>
             <td>{{$value->update_time}}</td>
             <td>
-                <a href="{{url('update_status?id=' . $value->id . '&status=' . $value->status)}}" >
-                @if($value->status == 1)
-                    <div style="color: green;">有效</div>
-                @else
-                    <div style="color: red;">无效</div>
+                @if(session('del') == 1)
+                    <a href="{{url('delete_pc?id=' . $value->id . '&flag=1')}}" onclick="confirm('确定删除吗?')">
+                        <img src="{{asset('image/delete.png')}}" alt="删除" style="height: 70%">
+                    </a>
                 @endif
-                </a>
             </td>
             <td ><a href="{{url('update_problem?id=' . $value->id)}}" >
                     <img src="{{('image/edit.png')}}" alt="编辑" style="height: 15%">

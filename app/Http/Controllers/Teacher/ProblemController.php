@@ -23,7 +23,7 @@ class ProblemController extends Controller
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'login';
             return showMessage($base);
         }
         if($request->isMethod('post')){
@@ -44,7 +44,7 @@ class ProblemController extends Controller
             $res = DB::table('problem')->insertGetId($data);
             if($res != null){
                 $base['message'] = '成功';
-                $base['url'] = url('admin');
+                $base['url'] = url('manage');
                 return showMessage($base);
             }else{
                 $base['message'] = '添加失败';
@@ -107,7 +107,7 @@ class ProblemController extends Controller
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'login';
             return showMessage($base);
         }
         $id = Input::get('id');
