@@ -24,7 +24,7 @@ class ContentController extends Controller
             return showMessage($base);
         }
         $res = DB::table('content')
-            ->paginate(1);
+            ->paginate(20);
         return view('Teacher/content_list')->with('res',$res);
 
     }

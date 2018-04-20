@@ -67,7 +67,7 @@ class IndexController extends Controller
         if (session('student') == null){
             return redirect('login');
         }
-        $res = DB::table('content')->where('status',1)->paginate(1);
+        $res = DB::table('content')->where('status',1)->paginate(20);
         return view('Student.content')->with('res',$res);
     }
 
