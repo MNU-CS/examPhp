@@ -33,7 +33,7 @@
         </div>
         @include('markdown::encode',['editors'=>['hint']])
         <input type="hidden" name="update_at" value="{{session('teacher')}}">
-        <div align="center"><input type="submit" value="提交"></div>
+        <div align="center"><input type="submit" value="提交" class="layui-btn"></div>
     </form>
 @endsection
 <style>

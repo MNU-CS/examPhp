@@ -72,6 +72,9 @@ class ContentController extends Controller
                 }
                 $users = explode(PHP_EOL,Input::get('users'));
                 foreach ($users as $user) {
+                    if ($user == ''){
+                        continue;
+                    }
                     $bool = DB::table('group')->where('num_id',trim($user))->where('content_id',$res['content_id'])->first();
                     if ($bool == null){
                         $group['num_id'] = trim($user);

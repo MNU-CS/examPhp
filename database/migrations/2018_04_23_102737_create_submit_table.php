@@ -19,7 +19,7 @@ class CreateSubmitTable extends Migration
             $table->unsignedInteger('content_id')->comment('考试id');
             $table->unsignedInteger('problem_id')->comment('题目id');
             $table->text('result')->comment('答案');
-            $table->dateTime('create_time')->comment('创建时间');
+            $table->dateTime('register_time')->comment('创建时间');
             $table->text('update_time')->comment('更改时间');
             $table->unique(['num_id','content_id','problem_id']);
             $table->foreign('num_id')->references('num')->on('student');

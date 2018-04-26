@@ -18,7 +18,7 @@ class CreateStudentTable extends Migration
         $table->integer('num')->unique()->comment('学号／工号');
         $table->string('passwd')->comment('密码');
         $table->string('name')->comment('姓名');
-        $table->dateTime('create_time')->comment('创建时间');
+        $table->dateTime('register_time')->comment('创建时间');
         $table->string('class')->comment('班级');
         $table->integer('role')->comment('角色');
     });

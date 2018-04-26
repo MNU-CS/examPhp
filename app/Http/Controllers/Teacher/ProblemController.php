@@ -61,7 +61,7 @@ class ProblemController extends Controller
     {
         if(session('teacher') == null){
             $base['message'] = '请重新登录';
-            $base['url'] = 'admin';
+            $base['url'] = 'manage';
             return showMessage($base);
         }
         if ($request->isMethod('post')){
@@ -86,7 +86,7 @@ class ProblemController extends Controller
                 ->update($data);
             if($res !== false){
                 $base['message'] = '更改成功';
-                $base['url'] = url('admin');
+                $base['url'] = url('manage');
                 return showMessage($base);
             }else{
                 $base['message'] = '更改失败';

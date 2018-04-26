@@ -13,7 +13,7 @@
 
     <h1 style="color: blue">{{$title->title}}</h1>
     <br><br>
-    <marquee width=600 behavior=scroll direction=left align=middle>
+    <marquee  behavior=scroll direction=left align=middle>
         <h2 style="color: red;">{{$title->news}}</h2>
     </marquee>
     <br><br>
