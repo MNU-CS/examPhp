@@ -150,6 +150,7 @@ class IndexController extends Controller
             ])->first();
             if ($bool != null){
                 $data['result'] = Input::get('result');
+                $data['update_time'] = date('Y-m-d H:i:s');
                 $res = DB::table('submit')->where([
                     ['content_id','=',$content_id],
                     ['problem_id','=',$problem_id],
@@ -170,6 +171,8 @@ class IndexController extends Controller
                 $data['num_id'] = $id;
                 $data['problem_id'] = $problem_id;
                 $data['content_id'] = $content_id;
+                $data['register_time'] = date('Y-m-d H:i:s');
+                $data['update_time'] = date('Y-m-d H:i:s');
                 $res = DB::table('submit')->insert($data);
                 if ($res !== false){
                     $base['message'] = '添加成功';
