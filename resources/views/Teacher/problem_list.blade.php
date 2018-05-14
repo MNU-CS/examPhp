@@ -28,7 +28,7 @@
             <td>{{$value->update_time}}</td>
             <td>
                 @if(session('del') == 1)
-                    <a href="{{url('delete_pc?id=' . $value->id . '&flag=1')}}" onclick="confirm('确定删除吗?')">
+                    <a href="{{url('delete_pc?id=' . $value->id . '&flag=1')}}" onclick=" return confirm('确定删除吗?')">
                         <img src="{{asset('image/delete.png')}}" alt="删除" style="height: 70%">
                     </a>
                 @endif

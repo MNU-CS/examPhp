@@ -47,7 +47,7 @@
                     </a>
                 </td>
                 <td>
-                    <a href="{{url('del_user?id=' . $value->id)}}" onclick="confirm('确定删除吗?')" >
+                    <a href="{{url('del_user?id=' . $value->id)}}" onclick=" return confirm('确定删除吗?')" >
                         <img src="{{asset('image/delete.png')}}" alt="删除" style="height: 70%">
                     </a>
                 </td>
