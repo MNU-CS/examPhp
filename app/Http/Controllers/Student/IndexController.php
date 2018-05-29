@@ -87,6 +87,11 @@ class IndexController extends Controller
         }
         $num = session('student');
         $bool1 = DB::table('content')->where('id',$id)->first();
+        if (strtotime($bool1->start_time) > strtotime(date("Y-m-d H:i:s")) || strtotime($bool1->end_time) < strtotime(date("Y-m-d H:i:s"))){
+                $base['message'] = '考试未开始或已结束';
+                $base['url'] = 'content';
+                return showMessage($base);
+        }
         if ($bool1->open == 0){
             $bool = DB::table('group')->where('num_id',$num)->where('content_id',$id)->first();
             if ($bool == null){
@@ -130,6 +135,11 @@ class IndexController extends Controller
         $problem_id = Input::get('id');
         $content_id = Input::get('content_id');
         $bool1 = DB::table('content')->where('id',$content_id)->first();
+        if (strtotime($bool1->start_time) > strtotime(date("Y-m-d H:i:s")) || strtotime($bool1->end_time) < strtotime(date("Y-m-d H:i:s"))){
+            $base['message'] = '考试未开始或已结束';
+            $base['url'] = 'content';
+            return showMessage($base);
+        }
         if ($bool1->open == 0){
             $bool = DB::table('group')->where('num_id',$id)->where('content_id',$id)->first();
             if ($bool == null){
