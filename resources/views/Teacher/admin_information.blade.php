@@ -22,9 +22,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">密码</label>
                 <div class="layui-input-inline">
-                    <input type="password" name="passwd"   autocomplete="off" class="layui-input" >
+                    <input type="password" name="passwd"   autocomplete="off" class="layui-input" placeholder="不填的话，不更改密码的哦">
                 </div>
-                <div class="layui-form-mid layui-word-aux">不填的话，不更改密码的哦</div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>

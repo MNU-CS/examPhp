@@ -44,7 +44,7 @@
             <label class="layui-form-label">考试题目</label>
             <div class="layui-input-block">
                 <input type="text" name="problem" required  lay-verify="required" placeholder="请输入题目编号，用,号分割"
-                       autocomplete="off" class="layui-input" value="{{$res}}">
+                       autocomplete="off" class="layui-input" value="{{$res}}" id="problem">
             </div>
         </div>
         <div class="layui-form-item">
@@ -60,7 +60,7 @@
         <input type="hidden" name="update_at" value="{{session('teacher')}}">
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="return f();">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -69,7 +69,6 @@
 @section('bottom')
     <script>
         //执行一个laydate实例
-
             laydate.render({
                 elem: '#start_time', //指定元素
                 type: 'datetime'
@@ -78,5 +77,40 @@
                 elem: '#end_time',
                 type: 'datetime'
             });
+    </script>
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+    <script>
+        $('#problem').change(function () {
+           var allproblem = $('#problem').val();
+           console.log(allproblem);
+           $.get('{{url("api/problem_confirm")}}',{problem:allproblem},function (data) {
+               if (data == 0){
+                   $('#problem').addClass("layui-bg-red");
+               }
+               else {
+                   $('#problem').removeClass("layui-bg-red");
+               }
+           });
+        });
+    </script>
+    <script>
+        function f() {
+            var bool = true;
+            var allproblem = $('#problem').val();
+            $.ajax({
+                type : "get",
+                url : "{{url("problem_confirm")}}",
+                data : "problem=" + allproblem,
+                async : false,
+                success : function(data){
+                    console.log(data);
+                    if (data == 0){
+                        bool = false;
+                    }
+                }
+            });
+            return bool;
+
+        }
     </script>
 @endsection
