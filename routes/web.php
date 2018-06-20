@@ -68,3 +68,5 @@ Route::get('show_submit','Teacher\ContentController@show_submit');
 Route::get('show_code','Teacher\ContentController@show_code');
 //删除题目或比赛
 Route::get('delete_pc','Teacher\ContentController@delete_pc');
+//解锁ip
+Route::match(['get','post'],'reset_ip','Teacher\UserController@reset_ip');

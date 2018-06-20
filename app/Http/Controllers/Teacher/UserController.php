@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Excel;
+use Illuminate\Validation\Rules\In;
+
 class UserController extends Controller
 {
 
@@ -198,4 +200,20 @@ class UserController extends Controller
     }
 
 
+    public function reset_ip(Request $request)
+    {
+        if ($request->isMethod("post")){
+            $num = Input::get('num');
+            $data['ip'] = '';
+            $res = DB::table('student')->where('num',$num)->update($data);
+            if ($res != ''){
+                return 0;
+            }else {
+                return 1;
+            }
+        }else {
+            return view('Teacher.reset_ip');
+        }
+
+    }
 }

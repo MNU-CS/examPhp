@@ -42,6 +42,7 @@
                         <dd><a href="{{url('change_pwd')}}">更改密码</a></dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item layui-nav-itemed"><a href="{{url('reset_ip')}}">解锁IP</a></li>
                 <li class="layui-nav-item layui-nav-itemed"><a href="{{url('logout')}}">退出</a></li>
             </ol>
         </div>
