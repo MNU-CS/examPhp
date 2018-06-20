@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
-
+use Illuminate\Support\Facades\Redis;
 class IndexController extends Controller
 {
 
@@ -37,9 +37,20 @@ class IndexController extends Controller
                     return '密码错误';
                 }else {
                     if ($res[0]->role === 1) {
-                        session(['student' => $username]);
-                        session(['name' => $res[0]->name]);
-                        return 1;
+                        if ($res[0]->ip == $request->getClientIp()){
+                            session(['student' => $username]);
+                            session(['name' => $res[0]->name]);
+                            return 1;
+                        }elseif($res[0]->ip == ''){
+                            $data['ip'] = $request->getClientIp();
+                            DB::table('student')->where('num',$username)->update($data);
+                            session(['student' => $username]);
+                            session(['name' => $res[0]->name]);
+                            return 1;
+                        }else{
+                            return 'ip被锁定，联系管理员处理！';
+                        }
+
                     } elseif ($res[0]->role === 2){
                         session(['teacher' => $username]);
                         session(['name' => $res[0]->name]);

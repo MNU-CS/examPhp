@@ -21,7 +21,7 @@
     <label style="color: green">结束时间 ：{{$title->end_time}}</label>
     <br><br>
 
-    <h3 style="color: orange"><?php echo '服务器当前时间   ' . date('Y-m-d H:i:s');?></h3>
+    <h3 style="color: orange" id="showTime"></h3>
 
     <table class="layui-table" lay-skin="line"  lay-even align="center" style="width: 80%;">
         <tr style="color: blue">
@@ -40,6 +40,24 @@
             </tr>
         @endforeach
     </table>
+    <script>
+        var t = null;
+        t = setTimeout(time,1000);//開始运行
+        function time()
+        {
+            clearTimeout(t);//清除定时器
+            dt = new Date();
+            var h=dt.getHours();//获取时
+            var m=dt.getMinutes();//获取分
+            var s=dt.getSeconds();//获取秒
+            document.getElementById("showTime").innerHTML =  "当前的时间为："+h+"时"+m+"分"+s+"秒";
+            t = setTimeout(time,1000); //设定定时器，循环运行
+        }
+
+    </script>
     <div align="center">{!! $res->links() !!}</div>
+
+@endsection
+@section('bottom')
 
 @endsection

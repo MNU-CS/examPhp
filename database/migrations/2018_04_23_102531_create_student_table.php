@@ -21,6 +21,7 @@ class CreateStudentTable extends Migration
         $table->dateTime('register_time')->comment('创建时间');
         $table->string('class')->comment('班级');
         $table->integer('role')->comment('角色');
+        $table->string('ip')->nullable()->comment('ip');
     });
 }
 
