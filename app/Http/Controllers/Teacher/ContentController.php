@@ -429,9 +429,10 @@ class ContentController extends Controller
         } else{
             DB::transaction(function () {
                 $id = Input::get('id');
-                DB::table('content')->where('id',$id)->delete();
                 DB::table('online_problem')->where('content_id',$id)->delete();
                 DB::table('submit')->where('content_id',$id)->delete();
+                DB::table('group')->where('content_id',$id)->delete();
+                DB::table('content')->where('id',$id)->delete();
             }, 5);
 
         }

@@ -97,20 +97,15 @@ class UserController extends Controller
                 return showMessage($base);
             }
         }
-        $student = DB::table('student')
-            ->where('id',$id)
-            ->first();
-        $bool = DB::table('submit')
-            ->where('num_id',$student->num)
-            ->first();
-        if ($bool != null){
-            $base['message'] = '用户有提交记录，不可删除';
-            $base['url'] = 'teacher_list';
-            return showMessage($base);
-        }
-        DB::table('student')
-            ->where('id',$id)
-            ->delete();
+        DB::transaction(function () {
+            $id = Input::get('id');
+            $student = DB::table('student')
+                ->where('id',$id)
+                ->first();
+            DB::table('submit')->where('num_id',$student->num)->delete();
+            DB::table('group')->where('num_id',$student->num)->delete();
+            DB::table('student')->where('id',$id)->delete();
+        }, 5);
         return back();
 
     }
