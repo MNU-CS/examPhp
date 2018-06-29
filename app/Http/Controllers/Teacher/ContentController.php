@@ -415,16 +415,26 @@ class ContentController extends Controller
         $id = Input::get('id');
         $flag = Input::get('flag');
         if ($flag == 1){
+            $bool1 = DB::table('online_problem')
+                ->where('problem_id',$id)
+                ->first();
+            if ($bool1 != null){
+                $base['message'] = '题目在考试列表中出现，不可删除';
+                $base['url'] = 'problem_list';
+                return showMessage($base);
+            }
             $bool = DB::table('problem')
                 ->where('id',$id)
                 ->delete();
         } else{
-            $bool = DB::table('content')
-                ->where('id',$id)
-                ->delete();
+            DB::transaction(function () {
+                $id = Input::get('id');
+                DB::table('content')->where('id',$id)->delete();
+                DB::table('online_problem')->where('content_id',$id)->delete();
+                DB::table('submit')->where('content_id',$id)->delete();
+            }, 5);
+
         }
-        if($bool != false){
-            return back();
-        }
+       return back();
     }
 }
